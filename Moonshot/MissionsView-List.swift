@@ -13,10 +13,9 @@ struct MissionsView_ListMode: View {
 	let missions: [Mission]
 	
 	var body: some View {
-		NavigationStack {
 			List{
 				ForEach(missions, id: \.id) { mission in
-					NavigationLink(destination: MissionView(mission: mission, astronauts: astronauts)) {
+					NavigationLink(value: mission){
 						HStack {
 							Image(mission.image)
 								.resizable()
@@ -47,13 +46,16 @@ struct MissionsView_ListMode: View {
 			.listStyle(PlainListStyle())
 			.padding(.horizontal)
 			.background(Color.darkBackground)
-		}
-		.preferredColorScheme(.dark)
+			.navigationDestination(for: Mission.self) { mission in
+				MissionView(mission: mission, astronauts: astronauts)
+			}
 	}
 }
 
 #Preview {
 	let astronauts: [String:Astronaut] = Bundle.main.decode("astronauts.json")
 	let missions: [Mission] = Bundle.main.decode("missions.json")
-	return MissionsView_ListMode(astronauts: astronauts, missions: missions)
+	return NavigationStack {
+		MissionsView_ListMode(astronauts: astronauts, missions: missions)
+	}
 }

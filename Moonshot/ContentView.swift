@@ -9,13 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
 	
+	@State private var path = PathStore()
+	
 	let astronauts: [String:Astronaut] = Bundle.main.decode("astronauts.json")
 	let missions: [Mission] = Bundle.main.decode("missions.json")
 	@AppStorage("viewMode") private var viewMode = "Grid"
 	
 				
     var body: some View {
-		NavigationStack {
+		NavigationStack(path: $path.path) {
 			Group{
 				if viewMode == "List"{
 					MissionsView_ListMode(astronauts: astronauts, missions: missions)

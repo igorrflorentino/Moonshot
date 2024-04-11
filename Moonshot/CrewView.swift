@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CrewView: View {
 	
-	struct CrewMember {
+	struct CrewMember: Hashable {
 		let role: String
 		let astronaut: Astronaut
 	}
@@ -28,9 +28,7 @@ struct CrewView: View {
 			ScrollView(.horizontal, showsIndicators: false) {
 				LazyHStack {
 					ForEach(crew, id: \.role) { crewMember in
-						NavigationLink {
-							AstronautView(astronaut: crewMember.astronaut)
-						} label: {
+						NavigationLink(value: crewMember){
 							HStack {
 								Image(crewMember.astronaut.id)
 									.resizable()
@@ -56,6 +54,9 @@ struct CrewView: View {
 			}
 		}
 		.background(.darkBackground)
+		.navigationDestination(for: CrewMember.self) { crewMemeber in
+			AstronautView(astronaut: crewMemeber.astronaut)
+		}
 	}
 	
 	init(mission: Mission, astronauts:[String:Astronaut]) {
@@ -75,6 +76,8 @@ struct CrewView: View {
 	let missions: [Mission] = Bundle.main.decode("missions.json")
 	let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
 	
-	return CrewView(mission: missions[0], astronauts: astronauts)
-		.preferredColorScheme(.dark)
+	return NavigationStack {
+		CrewView(mission: missions[0], astronauts: astronauts)
+	}
+	.preferredColorScheme(.dark)
 }

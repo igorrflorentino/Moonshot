@@ -60,6 +60,8 @@ struct MissionView: View {
 	let missions: [Mission] = Bundle.main.decode("missions.json")
 	let astronauts: [String:Astronaut] = Bundle.main.decode("astronauts.json")
 	
-	return MissionView(mission: missions[1], astronauts:astronauts)
-		.preferredColorScheme(.dark)
+	return NavigationStack {
+		MissionView(mission: missions[1], astronauts:astronauts)
+	}
+	.preferredColorScheme(.dark)
 }
