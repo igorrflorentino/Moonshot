@@ -47,6 +47,9 @@ struct MissionsView_GridMode: View {
 							)
 						}
 					}
+					.accessibilityElement(children: .ignore)
+					.accessibilityLabel(mission.displayName)
+					.accessibilityHint(mission.formattedLaunchDate)
 				}
 			}
 			.padding([.horizontal, .bottom])

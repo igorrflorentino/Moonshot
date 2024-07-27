@@ -49,6 +49,9 @@ struct CrewView: View {
 							}
 							.padding(.horizontal)
 						}
+						.accessibilityElement(children: .ignore)
+						.accessibilityLabel(crewMember.astronaut.name.replacingOccurrences(of: ".", with: " "))
+						.accessibilityHint(crewMember.role)
 					}
 				}
 			}

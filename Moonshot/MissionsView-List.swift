@@ -40,6 +40,9 @@ struct MissionsView_ListMode: View {
 						)
 					}
 					.listRowSeparator(.hidden)
+					.accessibilityElement(children: .ignore)
+					.accessibilityLabel(mission.displayName)
+					.accessibilityHint(mission.formattedLaunchDate)
 				}
 				.listRowBackground(Color.darkBackground)
 			}
